@@ -51,16 +51,20 @@ class ProductPage(BasePage):
 
     'Проверка того, что название товара из сообщения совпадает с реально добавленным товаром'
     def should_be_correct_product_name(self):
-        product_name_msg = self.driver.find_element(*self.PRODUCT_NAME_MSG)
-        product_name_real = self.driver.find_element(*self.PRODUCT_NAME_REAL)
+        # product_name_msg = self.driver.find_element(*self.PRODUCT_NAME_MSG)
+        product_name_msg = self.wait.until(EC.visibility_of_element_located(self.PRODUCT_NAME_MSG))
+        # product_name_real = self.driver.find_element(*self.PRODUCT_NAME_REAL)
+        product_name_real = self.wait.until(EC.visibility_of_element_located(self.PRODUCT_NAME_REAL))
         print(product_name_msg.text)
         print(product_name_real.text)
         assert product_name_msg.text == product_name_real.text, "Название товара из сообщения не совпадает с реальным названием товара"
 
     'Проверка того, что цена товара из сообщения совпадает с реальной ценой товара'
     def should_be_correct_product_price(self):
-        product_price_msg = self.driver.find_element(*self.PRODUCT_PRICE_MSG)
-        product_price_real = self.driver.find_element(*self.PRODUCT_PRICE_REAL)
+        # product_price_msg = self.driver.find_element(*self.PRODUCT_PRICE_MSG)
+        product_price_msg = self.wait.until(EC.visibility_of_element_located(self.PRODUCT_PRICE_MSG))
+        # product_price_real = self.driver.find_element(*self.PRODUCT_PRICE_REAL)
+        product_price_real = self.wait.until(EC.visibility_of_element_located(self.PRODUCT_PRICE_REAL))
         assert product_price_msg.text == product_price_real.text, "Стоимость товара из сообщения не совпадает с его реальной стоимостью"
         print(product_price_msg.text)
         print(product_price_real.text)

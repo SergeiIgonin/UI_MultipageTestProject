@@ -42,29 +42,3 @@ class LoginPage(BasePage):
         self.wait.until(EC.element_to_be_clickable(self.LOGIN_EMAIL_FIELD)).send_keys(email)
         self.wait.until(EC.element_to_be_clickable(self.LOGIN_PASSWORD_FIELD)).send_keys(password)
         self.wait.until(EC.element_to_be_clickable(self.LOGIN_SUBMIT_BUTTON)).click()
-#-------------------------------------
-#   dashboard_page
-#
-#   @allure.step("Click on 'My Info' link")
-#   def click_my_info_link(self):
-#       self.wait.until(EC.element_to_be_clickable(self.MY_INFO_BUTTON)).click()
-#----------
-#   personal_page
-#
-#   def change_name(self, new_name):
-#   with allure.step(f"Change name on '{new_name}'"):
-#       first_name_field = self.wait.until(EC.element_to_be_clickable(self.FIRST_NAME_FIELD))
-#       first_name_field.send_keys(Keys.COMMAND + "A")   # юзаем Keys т.к. эл. перекрывается др.эл. и метод .clear не срабатывает
-#       first_name_field.send_keys(Keys.BACKSPACE)
-#       first_name_field.send_keys(new_name)
-#       self.name = new_name
-#
-#   @allure.step("Save changes")
-#   def save_changes(self):
-#       self.wait.until(EC.element_to_be_clickable(self.SAVE_BUTTON)).click()
-#
-#   @allure.step("Changes has been saved successfuly")
-#   def is_changes_saved(self):
-#       self.wait.until(EC.invisibility_of_element_located(self.SPINNER))
-#       self.wait.until(EC.visibility_of_element_located(self.FIRST_NAME_FIELD))
-#       self.wait.until(EC.text_to_be_present_in_element_value(self.FIRST_NAME_FIELD, self.name))

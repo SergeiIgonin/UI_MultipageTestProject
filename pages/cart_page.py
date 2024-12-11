@@ -18,9 +18,6 @@ class CartPage(BasePage):
 
     'Проверка наличия подтверждающего сообщения о пустой корзине'
     def present_text_about_empty_cart(self):
-        cart_message = self.driver.find_element(*self.CART_MSG)
-        assert "корзина пуста" or "basket is empty" in cart_message.text, "Корзина не пуста"
-
-#--------------
-        # self.wait.until(EC.element_to_be_clickable(self.PASSWORD_FIELD2)).send_keys(password)
-        # self.wait.until(EC.element_to_be_clickable(self.CART_MSG)).click()
+        # cart_message = self.driver.find_element(*self.CART_MSG)
+        cart_message = self.wait.until(EC.visibility_of_element_located(self.CART_MSG))
+        assert "корзина пуста" or "basket is empty" or "carrito esta vacío" or "panier est vide" in cart_message.text, "Корзина не пуста"

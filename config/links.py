@@ -9,4 +9,5 @@ class Links:
     CART_PAGE = f"{MAIN_PAGE}/basket/"
     PRODUCT_PAGE = f"{MAIN_PAGE}/catalogue/coders-at-work_207/?promo=offer"
 
-    params = ["6", pytest.param("7", marks=pytest.mark.xfail), "8", "9"]
+    'Входные параметры для теста (tests/test_product_page.py::test_guest_can_add_product_to_cart)'
+    offers = ["6", pytest.param("7", marks=pytest.mark.xfail), "8", "9"]

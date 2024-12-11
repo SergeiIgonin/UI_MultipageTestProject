@@ -25,9 +25,8 @@ class BasePage:
         with allure.step(f"Open {self.PAGE_URL} page"):
             self.driver.get(self.PAGE_URL)
 
-    def open_with_params(self, params):
-        self.driver.get(Links.PRODUCT_PAGE + params)
-
+    def open_with_params(self, offers):
+        self.driver.get(Links.PRODUCT_PAGE + offers)
 
     def is_opened(self):
         with allure.step(f"Page {self.PAGE_URL} is opened"):
