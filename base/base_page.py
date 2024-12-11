@@ -1,4 +1,5 @@
 import allure
+from config.links import Links
 from allure_commons.types import AttachmentType                 # позволяет добавлять в Allure-reports скриншоты
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -23,6 +24,10 @@ class BasePage:
     def open(self):
         with allure.step(f"Open {self.PAGE_URL} page"):
             self.driver.get(self.PAGE_URL)
+
+    def open_with_params(self, params):
+        self.driver.get(Links.PRODUCT_PAGE + params)
+
 
     def is_opened(self):
         with allure.step(f"Page {self.PAGE_URL} is opened"):
