@@ -1,4 +1,4 @@
-import pytest, allure, time
+import pytest, allure
 from base.base_test import BaseTest
 
 
@@ -9,4 +9,4 @@ class TestLoginPage(BaseTest):
         self.login_page.should_be_login_url()
         self.login_page.should_be_login_form()
         self.login_page.should_be_register_form()
-
+        self.login_page.make_screenshot("Success")

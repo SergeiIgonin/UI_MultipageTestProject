@@ -1,4 +1,4 @@
-import math, allure, pytest
+import math, allure
 from base.base_page import BasePage
 from config.links import Links
 from selenium.webdriver.support import expected_conditions as EC
@@ -14,15 +14,16 @@ class ProductPage(BasePage):
     PRODUCT_NAME_REAL = ("xpath", "//div/h1")
     PRODUCT_PRICE_MSG = ("xpath", "(//div/p/strong)[2]")
     PRODUCT_PRICE_REAL = ("xpath", "//div/p[@class='price_color']")
-    'Проверка наличия кнопки "добавить в корзину"'
+
+    @allure.step("Присутствует кнопка 'добавить в корзину'")
     def should_be_button_add_to_cart(self):
         assert self.is_element_present(*self.ADD_TO_CART_BUTTON), "Отсутствует кнопка добавления в корзину"
 
-    'Добавление товара в корзину'
+    @allure.step("Добавление товара в корзину")
     def add_product_to_cart(self):
         self.wait.until(EC.element_to_be_clickable(self.ADD_TO_CART_BUTTON)).click()
 
-    'Решение задачи из алерта'
+    @allure.step("Решение задачи из алерта")
     def solve_quiz_and_get_code(self):
         alert = self.driver.switch_to.alert
         x = alert.text.split(" ")[2]
@@ -37,34 +38,26 @@ class ProductPage(BasePage):
         except NoAlertPresentException:
             print("No second alert presented")
 
-    'Проверка отсутствия сообщения об успехе'
+    @allure.step("Сообщение об успехе отсутствует")
     def should_not_be_success_message(self):
         assert self.is_not_element_present(*self.SUCCESS_MESSAGE), "Есть сообщение об успехе, которого не должно быть"
 
-    'Проверка наличия сообщения об успехе'
+    @allure.step("Отображается сообщение об успехе")
     def should_be_success_message(self):
         assert self.is_element_present(*self.SUCCESS_MESSAGE), "Отсутствует сообщение об успехе, которое должно быть"
 
-    'Проверка того, что элемент исчезает со временем'
+    @allure.step("Сообщение об успехе исчезает со временем")
     def should_see_element_disappear(self):
         assert self.is_element_disappeared(*self.SUCCESS_MESSAGE), "Элемент не исчезает, хотя должен исчезнуть"
 
-    'Проверка того, что название товара из сообщения совпадает с реально добавленным товаром'
+    @allure.step("Имя товара из сообщения совпадает с реальным именем товара")
     def should_be_correct_product_name(self):
-        # product_name_msg = self.driver.find_element(*self.PRODUCT_NAME_MSG)
         product_name_msg = self.wait.until(EC.visibility_of_element_located(self.PRODUCT_NAME_MSG))
-        # product_name_real = self.driver.find_element(*self.PRODUCT_NAME_REAL)
         product_name_real = self.wait.until(EC.visibility_of_element_located(self.PRODUCT_NAME_REAL))
-        print(product_name_msg.text)
-        print(product_name_real.text)
         assert product_name_msg.text == product_name_real.text, "Название товара из сообщения не совпадает с реальным названием товара"
 
-    'Проверка того, что цена товара из сообщения совпадает с реальной ценой товара'
+    @allure.step("Цена товара из сообщения совпадает с реальной ценой товара")
     def should_be_correct_product_price(self):
-        # product_price_msg = self.driver.find_element(*self.PRODUCT_PRICE_MSG)
         product_price_msg = self.wait.until(EC.visibility_of_element_located(self.PRODUCT_PRICE_MSG))
-        # product_price_real = self.driver.find_element(*self.PRODUCT_PRICE_REAL)
         product_price_real = self.wait.until(EC.visibility_of_element_located(self.PRODUCT_PRICE_REAL))
         assert product_price_msg.text == product_price_real.text, "Стоимость товара из сообщения не совпадает с его реальной стоимостью"
-        print(product_price_msg.text)
-        print(product_price_real.text)

@@ -1,12 +1,11 @@
 import allure
 from config.links import Links
-from allure_commons.types import AttachmentType                 # позволяет добавлять в Allure-reports скриншоты
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-#----------------------------------------------------------
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
-from selenium.webdriver.chrome.webdriver import WebDriver   # аннотация драйвера (для дальнейшего автоподставления его методов)
+from allure_commons.types import AttachmentType             # позволяет добавлять в Allure-reports скриншоты
+from selenium.webdriver.chrome.webdriver import WebDriver   # аннотация драйвера для отображения его методов (driver.-> *methods*)
 
 
 class BasePage:
@@ -22,15 +21,12 @@ class BasePage:
         self.wait = WebDriverWait(driver, 10, poll_frequency=1)
 
     def open(self):
-        with allure.step(f"Open {self.PAGE_URL} page"):
+        with allure.step(f"Открытие страницы {self.PAGE_URL}"):
             self.driver.get(self.PAGE_URL)
 
     def open_with_params(self, offers):
-        self.driver.get(Links.PRODUCT_PAGE + offers)
-
-    def is_opened(self):
-        with allure.step(f"Page {self.PAGE_URL} is opened"):
-            self.wait.until(EC.url_to_be(self.PAGE_URL))
+        with allure.step(f"Открытие страницы {Links.PRODUCT_PAGE}{offers}"):
+            self.driver.get(Links.PRODUCT_PAGE + offers)
 
     def make_screenshot(self, screenshot_name):
         allure.attach(
@@ -39,26 +35,23 @@ class BasePage:
             attachment_type=AttachmentType.PNG
         )
 
-#------------------------------------------------------------
-        # Переход на страницу корзины
+    @allure.step("Переход на страницу корзины")
     def go_to_cart(self):
-        go_to_cart_button = self.driver.find_element(*self.GO_TO_CART_BUTTON)
-        go_to_cart_button.click()
+        self.wait.until(EC.element_to_be_clickable(self.GO_TO_CART_BUTTON)).click()
 
-        # Переход на страницу регистрации и авторизации
+    @allure.step("Переход на страницу логина")    # Переход на страницу регистрации и авторизации
     def go_to_login_page(self):
-        login_link = self.driver.find_element(*self.LOGIN_LINK)
-        login_link.click()
+        self.wait.until(EC.element_to_be_clickable(self.LOGIN_LINK)).click()
 
-        # Проверка наличия ссылки на страницу логина
+    @allure.step("Проверка наличия ссылки на страницу логина")
     def should_be_login_link(self):
         assert self.is_element_present(*self.LOGIN_LINK), "Отсутствует ссылка на страницу регистрации/авторизации"
 
-        # Проверка того, что пользователь авторизован
+    @allure.step("Проверка факта авторизации пользователя")
     def should_be_authorized_user(self):
         assert self.is_element_present(*self.USER_ICON), "Пользователь не авторизован — отсутствует user icon"
 
-        # Проверка присутствия элемента на странице
+    @allure.step("Проверка присутствия элемента на странице")
     def is_element_present(self, method, locator):
         try:
             self.driver.find_element(method, locator)
@@ -66,7 +59,7 @@ class BasePage:
             return False
         return True
 
-        # Проверка отсутствия элемента на странице (в течении заданного времени)
+    @allure.step("Проверка отсутствия элемента на странице (ждем 5 сек.)")
     def is_not_element_present(self, method, locator):
         wait = WebDriverWait(self.driver, 5, 1)
         try:
@@ -75,7 +68,7 @@ class BasePage:
             return True
         return False
 
-        # Проверка исчезновения элемента со страницы, когда изначально он есть
+    @allure.step("Проверка исчезновения изначально существующего элемента со страницы (ждем 5 сек.)")
     def is_element_disappeared(self, method, locator):
         wait = WebDriverWait(self.driver, 5, 1)
         try:
@@ -83,4 +76,3 @@ class BasePage:
         except TimeoutException:
             return False
         return True
-
