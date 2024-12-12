@@ -1,4 +1,4 @@
-import math, allure
+import math, allure, time
 from base.base_page import BasePage
 from config.links import Links
 from selenium.webdriver.support import expected_conditions as EC
@@ -9,7 +9,7 @@ class ProductPage(BasePage):
     PAGE_URL = Links.PRODUCT_PAGE
 
     ADD_TO_CART_BUTTON = ("xpath", "//button[contains(@class, 'add-to-basket')]")
-    SUCCESS_MESSAGE = ("xpath", "(//div[@class='alertinner '])[1]")
+    SUCCESS_MESSAGE = ("xpath", "(//div[contains(@class, 'alertinner')][1]")
     PRODUCT_NAME_MSG = ("xpath", "(//div/strong)[3]")
     PRODUCT_NAME_REAL = ("xpath", "//div/h1")
     PRODUCT_PRICE_MSG = ("xpath", "(//div/p/strong)[2]")
@@ -29,6 +29,7 @@ class ProductPage(BasePage):
         x = alert.text.split(" ")[2]
         answer = str(math.log(abs((12 * math.sin(float(x))))))
         alert.send_keys(answer)
+        time.sleep(1)
         alert.accept()
         try:
             alert = self.driver.switch_to.alert

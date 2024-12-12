@@ -16,7 +16,7 @@ def driver(request):
     if browser_name == "chrome":
         options = webdriver.ChromeOptions()
         options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
-        options.add_argument('--headless=new')
+        # options.add_argument('--headless=new')
         options.add_argument('--no-sandbox')
         options.add_argument('--start-maximized')
         driver = webdriver.Chrome(options=options)
