@@ -1,12 +1,13 @@
 import pytest, time, allure, faker
 from base.base_test import BaseTest
 from config.links import Links
-from pages import product_page
+offers = Links.offers
 
 
 @pytest.mark.like_user
 class TestGuestAddToCartFromProductPage(BaseTest):
 
+    @pytest.mark.smoke
     def test_guest_can_add_product_to_cart(self):
         self.product_page.open()
         self.product_page.should_be_button_add_to_cart()
@@ -37,12 +38,10 @@ class TestGuestAddToCartFromProductPage(BaseTest):
         self.product_page.open()
         self.product_page.should_be_login_link()
 
+    @pytest.mark.smoke
     def test_guest_can_go_to_login_page_from_product_page(self):
         self.product_page.open()
         self.product_page.go_to_login_page()
-        time.sleep(1)
-
-    offers = Links.offers
 
     @pytest.mark.parametrize('offer', offers)
     def test_guest_can_add_product_to_cart(self, offer):
@@ -56,9 +55,7 @@ class TestGuestAddToCartFromProductPage(BaseTest):
     @pytest.mark.smoke
     def test_guest_cant_see_product_in_cart_opened_from_product_page(self):
         self.product_page.open()
-        time.sleep(1)
         self.product_page.go_to_cart()
-        time.sleep(1)
         self.cart_page.present_text_about_empty_cart()
         self.cart_page.is_cart_empty()
 
@@ -81,8 +78,6 @@ class TestUserAddToCartFromProductPage(BaseTest):
     def test_user_cant_see_success_message_before_adding_product_to_cart(self):
         self.login_page.open()
         self.login_page.login_user(self.data.EMAIL, self.data.PASSWORD)
-        time.sleep(1)
         self.login_page.should_be_authorized_user()
         self.product_page.open()
-        time.sleep(1)
         self.product_page.should_not_be_success_message()
