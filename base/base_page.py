@@ -13,7 +13,7 @@ class BasePage:
 
     GO_TO_CART_BUTTON = ("xpath", "//a[@class='btn btn-default']")
     LOGIN_LINK = ("xpath", "//a[@id='login_link']")
-    LOGIN_LINK_INVALID = ("xpath", "//a[@id='kogin_link']")  # пример кривого локатора для демонстрации падающего теста
+    LOGIN_LINK_INVALID = ("xpath", "//a[@id='kogin_link']")
     USER_ICON = ("xpath", "//i[@class='icon-user']")
 
     def __init__(self, driver):
