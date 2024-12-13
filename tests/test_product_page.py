@@ -100,7 +100,7 @@ class TestUserAddToCartFromProductPage(BaseTest):
 
     @allure.title('Проверка появления для пользователя на странице товара сообщение об успехе после добавления товара в корзину')
     @allure.severity("Minor")
-    def test_user_should_see_success_message_after_adding_product_to_cart(self):    # разобраться в падении тест
+    def test_user_should_see_success_message_after_adding_product_to_cart(self):
         self.login_page.open()
         self.login_page.login_user(self.data.EMAIL, self.data.PASSWORD)
         self.login_page.should_be_authorized_user()
