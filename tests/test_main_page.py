@@ -2,15 +2,18 @@ import pytest, allure
 from base.base_test import BaseTest
 
 
+@allure.feature("Main page Functionality for guest")
 @pytest.mark.login_guest
 class TestLoginFromMainPage(BaseTest):
-    @allure.title('Проверка наличия для гостя ссылки для регистрации/авторизации')
+    @allure.title('Проверка наличия для гостя на главной странице ссылки для перехода на страницу логина')
+    @allure.severity("Major")
     def test_guest_should_see_login_link_on_main_page(self):
         self.main_page.open()
         self.main_page.should_be_login_link()
         self.main_page.make_screenshot("Success")
 
-    @allure.title('Проверка возможности перехода гостя с главной страницы на страницу регистрации/авторизации')
+    @allure.title('Проверка возможности перехода гостя с главной страницы на страницу логина')
+    @allure.severity("Major")
     @pytest.mark.smoke
     def test_guest_can_go_to_login_page_from_login_page(self):
         self.main_page.open()
@@ -18,7 +21,8 @@ class TestLoginFromMainPage(BaseTest):
         self.login_page.should_be_login_url()
         self.login_page.make_screenshot("Success")
 
-    @allure.title('Проверка того, что корзина изначально будет пуста для гостя при переходе в нее с главной страницы')
+    @allure.title('Проверка изначально пустой корзины при переходе в нее с главной страницы в режиме гостя')
+    @allure.severity("Major")
     def test_guest_cant_see_product_in_cart_opened_from_main_page(self):
         self.main_page.open()
         self.main_page.go_to_cart()

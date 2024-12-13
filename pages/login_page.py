@@ -31,7 +31,7 @@ class LoginPage(BasePage):
         assert self.is_element_present(*self.REGISTER_FORM), "Отсутствует форма регистрации"
 
     @allure.step("Регистрация нового пользователя")
-    def register_new_user(self, email, password):  # метод принимает на вход email и password, которые мы передадим в тесте, в методе setup
+    def register_new_user(self, email, password):
         with allure.step("Ввод email"):
             self.wait.until(EC.element_to_be_clickable(self.REG_EMAIL_FIELD)).send_keys(email)
         with allure.step("Ввод пароля"):

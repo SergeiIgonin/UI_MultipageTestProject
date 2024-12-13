@@ -24,7 +24,8 @@ def driver(request):
     elif browser_name == "firefox":
         options = webdriver.FirefoxOptions()
         options.set_preference('intl.accept_languages', user_language)
-        options.add_argument("--headless")
+        # options.add_argument("--headless")
+        options.add_argument('--window-size=1920,1080')
         driver = webdriver.Firefox(options=options)
         print(f"\nstart firefox browser with language '{user_language}' for test...")
     else:

@@ -5,11 +5,11 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
 from allure_commons.types import AttachmentType             # позволяет добавлять в Allure-reports скриншоты
-from selenium.webdriver.chrome.webdriver import WebDriver   # аннотация драйвера для отображения его методов (driver.-> *methods*)
+from selenium.webdriver.chrome.webdriver import WebDriver   # отображает все методы драйвера в раскрыв. списке после ввода "driver."
 
 
 class BasePage:
-    PAGE_URL = None    # это чтоб пайчарм не ругался на эту переменную (она подтягивается из конкретных пейджей, где у всех своя)
+    PAGE_URL = None
 
     GO_TO_CART_BUTTON = ("xpath", "//a[@class='btn btn-default']")
     LOGIN_LINK = ("xpath", "//a[@id='login_link']")
@@ -18,7 +18,7 @@ class BasePage:
 
     def __init__(self, driver):
         self.driver: WebDriver = driver
-        self.wait = WebDriverWait(driver, 10, poll_frequency=1)
+        self.wait = WebDriverWait(driver, 5, poll_frequency=1)
 
     def open(self):
         with allure.step(f"Открытие страницы {self.PAGE_URL}"):
@@ -39,7 +39,7 @@ class BasePage:
     def go_to_cart(self):
         self.wait.until(EC.element_to_be_clickable(self.GO_TO_CART_BUTTON)).click()
 
-    @allure.step("Переход на страницу логина")    # Переход на страницу регистрации и авторизации
+    @allure.step("Переход на страницу логина")
     def go_to_login_page(self):
         self.wait.until(EC.element_to_be_clickable(self.LOGIN_LINK)).click()
 
@@ -54,25 +54,23 @@ class BasePage:
     @allure.step("Проверка присутствия элемента на странице")
     def is_element_present(self, method, locator):
         try:
-            self.driver.find_element(method, locator)
+            self.wait.until(EC.presence_of_element_located((method, locator)))
         except NoSuchElementException:
             return False
         return True
 
     @allure.step("Проверка отсутствия элемента на странице (ждем 5 сек.)")
     def is_not_element_present(self, method, locator):
-        wait = WebDriverWait(self.driver, 5, 1)
         try:
-            wait.until(EC.presence_of_element_located((method, locator)))
+            self.wait.until(EC.presence_of_element_located((method, locator)))
         except TimeoutException:
             return True
         return False
 
     @allure.step("Проверка исчезновения изначально существующего элемента со страницы (ждем 5 сек.)")
     def is_element_disappeared(self, method, locator):
-        wait = WebDriverWait(self.driver, 5, 1)
         try:
-            wait.until_not(EC.presence_of_element_located((method, locator)))
+            self.wait.until(EC.presence_of_element_located((method, locator)))
         except TimeoutException:
-            return False
-        return True
+            return True
+        return False
