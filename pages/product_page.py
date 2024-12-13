@@ -48,7 +48,7 @@ class ProductPage(BasePage):
 
     @allure.step("Сообщение об успехе исчезает со временем")
     def should_see_element_disappear(self):
-        assert self.is_element_disappeared(*self.SUCCESS_MESSAGE), "Элемент не исчезает, хотя должен исчезнуть"
+        assert self.is_disappeared(*self.SUCCESS_MESSAGE), "Элемент не исчезает, хотя должен исчезнуть"
 
     @allure.step("Имя товара из сообщения совпадает с реальным именем товара")
     def should_be_correct_product_name(self):

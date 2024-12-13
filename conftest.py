@@ -16,7 +16,7 @@ def driver(request):
     if browser_name == "chrome":
         options = webdriver.ChromeOptions()
         options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
-        # options.add_argument('--headless=new')
+        options.add_argument('--headless=new')
         options.add_argument('--no-sandbox')
         options.add_argument('--start-maximized')
         driver = webdriver.Chrome(options=options)
@@ -24,7 +24,7 @@ def driver(request):
     elif browser_name == "firefox":
         options = webdriver.FirefoxOptions()
         options.set_preference('intl.accept_languages', user_language)
-        # options.add_argument("--headless")
+        options.add_argument("--headless")
         options.add_argument('--window-size=1920,1080')
         driver = webdriver.Firefox(options=options)
         print(f"\nstart firefox browser with language '{user_language}' for test...")

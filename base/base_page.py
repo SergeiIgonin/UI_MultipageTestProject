@@ -5,7 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import TimeoutException
 from allure_commons.types import AttachmentType             # позволяет добавлять в Allure-reports скриншоты
-from selenium.webdriver.chrome.webdriver import WebDriver   # отображает все методы драйвера в раскрыв. списке после ввода "driver."
+from selenium.webdriver.chrome.webdriver import WebDriver    # позволяет автоматически подтягивать методы драйвера после ввода "driver."
 
 
 class BasePage:
@@ -54,7 +54,7 @@ class BasePage:
     @allure.step("Проверка присутствия элемента на странице")
     def is_element_present(self, method, locator):
         try:
-            self.wait.until(EC.presence_of_element_located((method, locator)))
+            self.wait.until(EC.visibility_of_element_located((method, locator)))
         except NoSuchElementException:
             return False
         return True
@@ -62,15 +62,15 @@ class BasePage:
     @allure.step("Проверка отсутствия элемента на странице (ждем 5 сек.)")
     def is_not_element_present(self, method, locator):
         try:
-            self.wait.until(EC.presence_of_element_located((method, locator)))
+            self.wait.until(EC.visibility_of_element_located((method, locator)))
         except TimeoutException:
             return True
         return False
 
     @allure.step("Проверка исчезновения изначально существующего элемента со страницы (ждем 5 сек.)")
-    def is_element_disappeared(self, method, locator):
+    def is_disappeared(self, method, locator):
         try:
-            self.wait.until(EC.presence_of_element_located((method, locator)))
+            self.wait(TimeoutException).until_not(EC.visibility_of_element_located((method, locator)))
         except TimeoutException:
-            return True
-        return False
+            return False
+        return True
