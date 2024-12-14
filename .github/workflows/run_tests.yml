@@ -41,11 +41,3 @@ jobs:
         - name: run_all_tests_in_firefox
           if: "github.event.inputs.deployment_target == 'run_all_tests_in_chrome_es'" is True
           run: pytest -sv --browser_name=firefox
-#####################################################################
-
-        - name: Install Chrome
-          run: sudo apt-get install google-chrome-stable
-        - name: Install dependensies
-          run: pip install -r requirements.txt
-        - name: Run test
-          run: pytest -v --language=es
