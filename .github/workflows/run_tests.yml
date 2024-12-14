@@ -30,14 +30,14 @@ jobs:
         - name: Install dependensies
           run: pip install -r requirements.txt
         - name: smoke_tests_in_chrome
-          if: "github.event.inputs.deployment_target == 'run_smoke_tests_in_chrome_ru'"
+          if: "github.event.inputs.deployment_target == 'smoke_tests_in_chrome'"
           run: pytest -s -v -m smoke
         - name: smoke_tests_in_firefox
-          if: "github.event.inputs.deployment_target == 'run_smoke_tests_in_firefox_en'"
+          if: "github.event.inputs.deployment_target == 'smoke_tests_in_firefox'"
           run: pytest -s -v -m smoke --browser_name=firefox
         - name: all_tests_in_chrome
-          if: "github.event.inputs.deployment_target == 'run_all_tests_in_chrome_es'"
+          if: "github.event.inputs.deployment_target == 'all_tests_in_chrome'"
           run: pytest -s -v
         - name: all_tests_in_firefox
-          if: "github.event.inputs.deployment_target == 'run_all_tests_in_chrome_es'"
+          if: "github.event.inputs.deployment_target == 'all_tests_in_chrome'"
           run: pytest -s -v --browser_name=firefox
