@@ -30,14 +30,22 @@ jobs:
         - name: Install dependensies
           run: pip install -r requirements.txt
         - name: run_smoke_tests_in_chrome
-          if: "github.event.inputs.deployment_target == 'run_smoke_tests_in_chrome_ru'"
+          if: "github.event.inputs.deployment_target == 'run_smoke_tests_in_chrome_ru'" is True
           run: pytest -sv -m smoke
         - name: run_smoke_tests_in_firefox
-          if: "github.event.inputs.deployment_target == 'run_smoke_tests_in_firefox_en'"
+          if: "github.event.inputs.deployment_target == 'run_smoke_tests_in_firefox_en'" is True
           run: pytest -sv -m smoke --browser_name=firefox
         - name: run_all_tests_in_chrome
-          if: "github.event.inputs.deployment_target == 'run_all_tests_in_chrome_es'"
+          if: "github.event.inputs.deployment_target == 'run_all_tests_in_chrome_es'" is True
           run: pytest -sv
         - name: run_all_tests_in_firefox
-          if: "github.event.inputs.deployment_target == 'run_all_tests_in_chrome_es'"
+          if: "github.event.inputs.deployment_target == 'run_all_tests_in_chrome_es'" is True
           run: pytest -sv --browser_name=firefox
+#####################################################################
+
+        - name: Install Chrome
+          run: sudo apt-get install google-chrome-stable
+        - name: Install dependensies
+          run: pip install -r requirements.txt
+        - name: Run test
+          run: pytest -v --language=es
