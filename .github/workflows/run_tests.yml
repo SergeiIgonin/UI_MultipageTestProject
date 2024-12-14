@@ -39,5 +39,5 @@ jobs:
           if: "github.event.inputs.deployment_target == 'all_tests_in_chrome'"
           run: pytest -sv
         - name: all_tests_in_firefox
-          if: "github.event.inputs.deployment_target == 'all_tests_in_chrome'"
+          if: "github.event.inputs.deployment_target == 'all_tests_in_firefox'"
           run: pytest -sv --browser_name=firefox
